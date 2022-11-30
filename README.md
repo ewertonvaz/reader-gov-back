@@ -1,5 +1,19 @@
 # Docs Collection 92 - Server - back end
 
+# Instalação
+
+Executar os comandos:
+
+```
+git clone https://github.com/ewertonvaz/docs-collection-92-back.git
+cd docs-collection-92-back
+npm install
+npm start
+
+```
+
+### Passo a passo
+
 ```
 npm init -y
 ```
