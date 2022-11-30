@@ -7,6 +7,7 @@ Executar os comandos:
 ```
 git clone https://github.com/ewertonvaz/docs-collection-92-back.git
 cd docs-collection-92-back
+cp .env.sample .env
 npm install
 npm start
 
