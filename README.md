@@ -35,7 +35,7 @@ Retorna Status 200 e um objeto com os dados do usuário que satisfazem a condiç
 **Ex:**
 `/users/email/bobesponja@gmail.com`
 
-Obterá os livro cujo **email** é igual a **bobesponja@gmail.com**.
+Obterá os dados do usuário cujo **email** é igual a **bobesponja@gmail.com**.
 
 ### Atualizar um usuário pelo ID
 
