@@ -1,9 +1,10 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import connect from "./config/db.config.js";
+import cors from "cors";
 import userRoutes from './routes/user.routes.js';
 import fileRoutes from './routes/file.routes.js';
-import cors from "cors";
+import bookRoutes from "./routes/book.routes.js";
 
 dotenv.config();
 
@@ -20,8 +21,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
-app.use("/user", userRoutes);
+app.use("/users", userRoutes);
 app.use("/file", fileRoutes);
+app.use("/books", bookRoutes);
 
 connect(dbName);
 
