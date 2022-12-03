@@ -5,6 +5,7 @@ import cors from "cors";
 import userRoutes from './routes/user.routes.js';
 import fileRoutes from './routes/file.routes.js';
 import bookRoutes from "./routes/book.routes.js";
+import DocumentRoutes from "./routes/document.routes.js";
 
 dotenv.config();
 
@@ -21,9 +22,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
-app.use("/users", userRoutes);
-app.use("/file", fileRoutes);
 app.use("/books", bookRoutes);
+app.use("/documents", DocumentRoutes);
+app.use("/file", fileRoutes);
+app.use("/users", userRoutes);
 
 connect(dbName);
 
