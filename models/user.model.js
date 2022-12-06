@@ -2,20 +2,44 @@ import { Schema, model } from "mongoose";
 
 const userSchema = new Schema(
   {
-    name: { type: String, required: true, trim: true },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      minLength: 2,
+      maxLength: 20
+    },
+    age: {
+      type: Number,
+      min: 18,
+      max: 100,
+    },
     email: {
       type: String,
       required: true,
       unique: true,
-      match: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gm,
+      lowercase: true,
+      match: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
+    },
+    role: {
+      type: String,
+      enum: ["ADMIN", "USER"],
+      default: "USER",
     },
     active: {
       type: Boolean,
       default: true,
     },
-    password: { type: String, required: true },
-    role: { type: String, enum: ["ADMIN", "USER"], default: "USER" },
-    createdAt: { type: Date, default: Date.now() },
+    tasks: [{ type: String }],
+    passwordHash: { type: String, required: true },
+    birth: { type: Date },
+    address: {
+      city: { type: String },
+      state: { type: String },
+    },
+  },
+  {
+    timestamps: true,
   }
 );
 

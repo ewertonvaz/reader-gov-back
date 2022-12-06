@@ -25,7 +25,7 @@ app.use(express.json());
 app.use("/books", bookRoutes);
 app.use("/documents", DocumentRoutes);
 app.use("/file", fileRoutes);
-app.use("/users", userRoutes);
+app.use("/user", userRoutes);
 
 connect(dbName);
 
