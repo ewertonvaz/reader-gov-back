@@ -6,6 +6,7 @@ import userRoutes from './routes/user.routes.js';
 import fileRoutes from './routes/file.routes.js';
 import bookRoutes from "./routes/book.routes.js";
 import DocumentRoutes from "./routes/document.routes.js";
+import S3Routes from "./routes/s3.routes.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/books", bookRoutes);
 app.use("/documents", DocumentRoutes);
 app.use("/file", fileRoutes);
+app.use("/s3", S3Routes);
 app.use("/user", userRoutes);
 
 connect(dbName);
