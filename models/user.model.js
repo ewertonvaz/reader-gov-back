@@ -37,6 +37,7 @@ const userSchema = new Schema(
       city: { type: String },
       state: { type: String },
     },
+    profilePic: { type: String }
   },
   {
     timestamps: true,

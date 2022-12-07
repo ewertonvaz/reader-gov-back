@@ -218,6 +218,7 @@ Retorna Status 200 e caso o usuário exista, um objeto com os dados do usuário 
       city: { type: String },
       state: { type: String },
     },
+    profilePic: { type: String }
   },
   {
     timestamps: true,
