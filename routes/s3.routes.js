@@ -40,12 +40,11 @@ S3Routes.get('*', async (req,res) => {
 })
 
 
-S3Routes.put('*', async (req,res) => {
+S3Routes.put('/upload', async (req,res) => {
   const form = new formidable.IncomingForm();
   form.parse(req, async (err, fields, files) => {
     const extension = files.file.originalFilename.split('.');
     const filename = files.file.newFilename + "." + extension[ extension.length - 1 ];
-    console.log(filename);
 
     await s3.putObject({
       Body: fs.readFileSync(files.file.filepath),

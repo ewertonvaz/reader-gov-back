@@ -15,7 +15,7 @@ CloudnaryRoutes.put("/upload", await fileUploader.single("file"), (req, res, nex
   // Get the URL of the uploaded file and send it as a response.
   // 'fileUrl' can be any name, just make sure you remember to use the same when accessing it on the frontend
   
-  res.json({ fileUrl: req.file.path });
+  res.json({ filename: req.file.path });
 });
 
 export default CloudnaryRoutes;
