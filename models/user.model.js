@@ -37,7 +37,8 @@ const userSchema = new Schema(
       city: { type: String },
       state: { type: String },
     },
-    profilePic: { type: String }
+    profilePic: { type: String },
+    emailConfirm: { type: Boolean, default: false },
   },
   {
     timestamps: true,

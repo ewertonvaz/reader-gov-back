@@ -6,6 +6,7 @@ import generateToken from "../config/jwt.config.js";
 import isAuthMiddleware from "../middleware/isAuth.middleware.js";
 import attachCurrentUser from "../middleware/attachCurrentUser.middleware.js";
 import isAdmin from "../middleware/isAdmin.middleware.js";
+import SendMail from "../services/send-mail.service.js";
 
 const userRoute = express.Router();
 
@@ -13,7 +14,7 @@ const saltRounds = 10;
 
 userRoute.post("/sign-up", async (req, res) => {
 
-    const { password } = req.body;
+    const { email, password } = req.body;
     try {
         if(
             !password ||
@@ -33,6 +34,12 @@ userRoute.post("/sign-up", async (req, res) => {
         });
 
         delete newUser._doc.passwordHash;
+
+        // await SendMail(
+        //   email,
+        //   "Ativação de Conta",
+        //   `<p>Clique no link para ativar sua conta:<p><a href=http://localhost:8080/user/activate-account/${newUser._id}>LINK</a>`
+        // );
 
         return res.status(200).json(newUser);
     } catch (error) {
@@ -97,7 +104,26 @@ userRoute.post("/login", async (req, res) => {
       return res.status(500).json(error.errors);
     }
   });
-   
+  
+  userRoute.get("/activate-account/:userId", async (req, res) => {
+    const { userId } = req.params;
+    const user = await UserModel.findOne({ _id: userId });
+    try {
+      if (!user) {
+        return res.send("Erro na ativação da conta");
+      }
+
+      await UserModel.findByIdAndUpdate(userId, {
+        emailConfirm: true,
+      });
+
+      res.send("Usuário ativado!");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
+});
+
 //CREATE - MONGODB
 userRoute.post("/create-user", async (req, res) => {
   try {
