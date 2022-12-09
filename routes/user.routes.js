@@ -35,11 +35,11 @@ userRoute.post("/sign-up", async (req, res) => {
 
         delete newUser._doc.passwordHash;
 
-        // await SendMail(
-        //   email,
-        //   "Ativação de Conta",
-        //   `<p>Clique no link para ativar sua conta:<p><a href=http://localhost:8080/user/activate-account/${newUser._id}>LINK</a>`
-        // );
+        await SendMail(
+          email,
+          "Ativação de Conta",
+          `<p>Clique no link para ativar sua conta:<p><a href=http://localhost:8080/user/activate-account/${newUser._id}>LINK</a>`
+        );
 
         return res.status(200).json(newUser);
     } catch (error) {
