@@ -3,7 +3,7 @@ import express from "express";
 import UserModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import generateToken from "../config/jwt.config.js";
-import isAuthMiddleware from "../middleware/isAuth.middleware.js";
+import isAuth from "../middleware/isAuth.middleware.js";
 import attachCurrentUser from "../middleware/attachCurrentUser.middleware.js";
 import isAdmin from "../middleware/isAdmin.middleware.js";
 import SendMail from "../services/send-mail.service.js";
@@ -76,7 +76,7 @@ userRoute.post("/login", async (req, res) => {
     }
   });
 
-  userRoute.get('/profile', isAuthMiddleware, attachCurrentUser, (req, res) => {
+  userRoute.get('/profile', isAuth, attachCurrentUser, (req, res) => {
     try {
         const loggedUser = req.currentUser;
         if (!loggedUser){
@@ -93,7 +93,7 @@ userRoute.post("/login", async (req, res) => {
 
   })
 
-  userRoute.get("/all-users", isAuthMiddleware, isAdmin, attachCurrentUser, async (req, res) => {
+  userRoute.get("/all-users", isAuth, isAdmin, attachCurrentUser, async (req, res) => {
     try {
       
       const users = await UserModel.find({}, { passwordHash: 0 });
@@ -124,8 +124,46 @@ userRoute.post("/login", async (req, res) => {
   }
 });
 
-//CREATE - MONGODB
-userRoute.post("/create-user", async (req, res) => {
+userRoute.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
+  try {
+    const { _id } = req.currentUser;
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      _id,
+      { ...req.body },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
+
+userRoute.delete("/delete", isAuth, attachCurrentUser, async (req, res) => {
+  try {
+    const { _id } = req.currentUser;
+
+    const deletedUser = await UserModel.findByIdAndDelete(_id);
+
+    if (!deletedUser) {
+      return res.status(400).json({ msg: "Usuário não encontrado!" });
+    }
+
+    const users = await UserModel.find();
+
+    //deletar TODAS as tarefas que o usuário é dono
+    // await TaskModel.deleteMany({ user: _id });
+
+    return res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
+
+userRoute.post("/create-user", isAuth, isAdmin, async (req, res) => {
   try {
     const form = req.body;
 
@@ -139,28 +177,11 @@ userRoute.post("/create-user", async (req, res) => {
   }
 });
 
-//GET ALL USERS
-userRoute.get("/all-users", async (req, res) => {
-  try {
-    const users = await UserModel.find({}, { __v: 0, updatedAt: 0 })
-      .sort({
-        age: 1,
-      })
-      .limit(100);
-
-    return res.status(200).json();
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error.errors);
-  }
-});
-
-//GET ONE USER
-userRoute.get("/oneUser/:id", async (req, res) => {
+userRoute.get("/oneUser/:id", isAuth, isAdmin, async (req, res) => {
   try {
     const { id } = req.params;
 
-    // const user = await UserModel.find({_id: id})
+    const user = await UserModel.find({_id: id})
     // const user = await UserModel.findById(id).populate("tasks");
 
     if (!user) {
@@ -168,45 +189,6 @@ userRoute.get("/oneUser/:id", async (req, res) => {
     }
 
     return res.status(200).json(user);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error.errors);
-  }
-});
-
-userRoute.delete("/delete/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const deletedUser = await UserModel.findByIdAndDelete(id);
-
-    if (!deletedUser) {
-      return res.status(400).json({ msg: "Usuário não encontrado!" });
-    }
-
-    const users = await UserModel.find();
-
-    //deletar TODAS as tarefas que o usuário é dono
-    // await TaskModel.deleteMany({ user: id });
-
-    return res.status(200).json(users);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error.errors);
-  }
-});
-
-userRoute.put("/edit/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      id,
-      { ...req.body },
-      { new: true, runValidators: true }
-    );
-
-    return res.status(200).json(updatedUser);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error.errors);
