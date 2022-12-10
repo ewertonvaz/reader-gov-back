@@ -58,4 +58,14 @@ DocumentRoutes.delete("/:docId", async (req, res) => {
     }
 });
 
+DocumentRoutes.get("/get-all", async (req, res) => {
+    try {
+        const documents = await DocumentModel.find({});        
+        return res.status(200).json(documents);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json("Não foi possível obter a lista de documentos!");
+    }
+})
+
 export default DocumentRoutes;
