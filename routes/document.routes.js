@@ -3,7 +3,7 @@ import DocumentModel from "../models/document.model.js";
 
 const DocumentRoutes = new Router();
 
-DocumentRoutes.get("/:docId", async (req, res) => {
+DocumentRoutes.get("/get-one/:docId", async (req, res) => {
     const { docId } = req.params;
 
     try {

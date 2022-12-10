@@ -241,12 +241,21 @@ Retorna Status 200 e um objeto com os dados do documento criado.
 ### Recuperar um documento pelo ID
 
 ```
-GET /documents/:docId
+GET /documents/get-one/:docId
 
 ```
 
 Retorna Status 200 e um objeto com os dados do documento cuja ID foi passada como parâmetro.
 **Obs:** Ao receber no fron-end é recomendado usar o _decodeURI()_ para normalizar o conteúdo do campo **texto** que for recuperado.
+
+### Recuperar a lista de todos os documentos
+
+```
+GET /documents/get-all
+
+```
+
+Retorna Status 200 e um array contendo os dados de todos os documento da collection.
 
 ### Atualizar um documento pelo ID
 
