@@ -8,6 +8,7 @@ import bookRoutes from "./routes/book.routes.js";
 import DocumentRoutes from "./routes/document.routes.js";
 import S3Routes from "./routes/s3.routes.js";
 import CloudnaryRoutes from "./routes/cloudnary.routes.js";
+import ServerRoutes from "./routes/server.routes.js";
 
 dotenv.config();
 
@@ -22,12 +23,13 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
+app.use(express.static('public'));
 app.use(express.json());
 app.use("/books", bookRoutes);
 app.use("/cn", CloudnaryRoutes)
 app.use("/documents", DocumentRoutes);
 app.use("/file", fileRoutes);
+app.use("", ServerRoutes);
 app.use("/s3", S3Routes);
 app.use("/user", userRoutes);
 
