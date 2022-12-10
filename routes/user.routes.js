@@ -11,7 +11,7 @@ import SendMail from "../services/send-mail.service.js";
 const userRoute = express.Router();
 const serverAddr = {
   development: "http://localhost:8080",
-  production: "https://reader-gov-back.cyclic.app/"
+  production: "https://reader-gov-back.cyclic.app"
 };
 
 const saltRounds = 10;
