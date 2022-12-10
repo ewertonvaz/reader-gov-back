@@ -9,6 +9,10 @@ import isAdmin from "../middleware/isAdmin.middleware.js";
 import SendMail from "../services/send-mail.service.js";
 
 const userRoute = express.Router();
+const serverAddr = {
+  development: "http://localhost:8080",
+  production: "https://reader-gov-back.cyclic.app/"
+};
 
 const saltRounds = 10;
 
@@ -38,7 +42,9 @@ userRoute.post("/sign-up", async (req, res) => {
         await SendMail(
           email,
           "Ativação de Conta",
-          `<p>Clique no link para ativar sua conta:<p><a href=http://localhost:8080/user/activate-account/${newUser._id}>LINK</a>`
+          `<h1>Clique no link para ativar sua conta:</h1>
+            <a href=${serverAddr[process.env.NODE_ENV] || serverAddr["development"]}/user/activate-account/${newUser._id}>
+          Ativar minha conta</a>`
         );
 
         return res.status(200).json(newUser);
