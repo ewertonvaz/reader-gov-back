@@ -1,5 +1,7 @@
 import { Router } from "express";
 import DocumentModel from "../models/document.model.js";
+import isAuth from "../middleware/isAuth.middleware.js";
+import attachCurrentUser from "../middleware/attachCurrentUser.middleware.js";
 
 const DocumentRoutes = new Router();
 
@@ -60,8 +62,16 @@ DocumentRoutes.delete("/:docId", async (req, res) => {
 });
 
 DocumentRoutes.get("/get-all", async (req, res) => {
+    const { dt, s, ps, q } = req.query;
+    console.log(dt, s, ps, q);
+    const query = {};
     try {
-        const documents = await DocumentModel.find({});        
+        if ( dt ) { query["tipo"] = dt.toLowerCase()}
+        if ( !s ) { s = 0}
+        if ( !ps ) { ps = 0}
+        // console.log(query);
+        // db.collection.find({}).skip(perPage * page).limit(perPage)
+        const documents = await DocumentModel.find( query ).skip( s ).limit( ps );        
         return res.status(200).json(documents);
     } catch (e) {
         console.log(e);
