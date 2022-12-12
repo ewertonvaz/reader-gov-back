@@ -39,7 +39,8 @@ DocumentRoutes.put("/:docId", async (req, res) => {
                 //encodeURI()
             },
             { new: true, runValidators: true }
-         );        return res.status(200).json(document);
+         );        
+         return res.status(200).json(document);
     } catch (e) {
         console.log(e);
         return res.status(500).json("Não foi possível atualizar o documento!");
@@ -67,5 +68,14 @@ DocumentRoutes.get("/get-all", async (req, res) => {
         return res.status(500).json("Não foi possível obter a lista de documentos!");
     }
 })
+
+// DocumentRoutes.get("/change-all", async (req, res) =>{
+//     const documents = await DocumentModel.updateMany(
+//         { tipo: {$exists: false}},
+//         { tipo: "dou"},
+//         { new: true, runValidators: true }
+//     );
+//     return res.status(200).json(documents);
+// });
 
 export default DocumentRoutes;
