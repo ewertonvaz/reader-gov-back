@@ -29,6 +29,7 @@ const userSchema = new Schema(
     passwordHash: { type: String, required: true },
     profilePic: { type: String },
     emailConfirm: { type: Boolean, default: false },
+    books: [{ type: Schema.Types.ObjectId, ref: "Book" }]
   },
   {
     timestamps: true,

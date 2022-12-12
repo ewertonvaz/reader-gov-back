@@ -7,7 +7,8 @@ const documentSchema = new Schema({
     texto: {type: String},
     pdf : {type: String},
     dataPublicacao : { type: Date },
-    tipo: { type: String, enum: ["dou", "sei"], default: "dou" }
+    tipo: { type: String, enum: ["dou", "sei"], default: "dou" },
+    document_id: {type: String}
 });
 
 const DocumentModel = model("Document", documentSchema);
