@@ -65,13 +65,13 @@ DocumentRoutes.get("/get-all", async (req, res) => {
     const { dt, s, ps, q } = req.query;
     console.log(dt, s, ps, q);
     const query = {};
+    const startindex = s ? s : 0;
+    const pagesize = ps ? ps : 0;
     try {
         if ( dt ) { query["tipo"] = dt.toLowerCase()}
-        if ( !s ) { s = 0}
-        if ( !ps ) { ps = 0}
         // console.log(query);
         // db.collection.find({}).skip(perPage * page).limit(perPage)
-        const documents = await DocumentModel.find( query ).skip( s ).limit( ps );        
+        const documents = await DocumentModel.find( query ).skip( startindex ).limit( pagesize );        
         return res.status(200).json(documents);
     } catch (e) {
         console.log(e);
