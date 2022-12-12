@@ -9,11 +9,6 @@ const userSchema = new Schema(
       minLength: 2,
       maxLength: 20
     },
-    age: {
-      type: Number,
-      min: 18,
-      max: 100,
-    },
     email: {
       type: String,
       required: true,
