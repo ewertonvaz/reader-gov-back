@@ -77,7 +77,7 @@ DocumentRoutes.get("/get-all", async (req, res) => {
         console.log(e);
         return res.status(500).json("Não foi possível obter a lista de documentos!");
     }
-})
+});
 
 // DocumentRoutes.get("/change-all", async (req, res) =>{
 //     const documents = await DocumentModel.updateMany(
