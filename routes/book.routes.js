@@ -1,5 +1,8 @@
 import { Router } from "express";
 import BookModel from "../models/books.model.js";
+import isAuth from "../middleware/isAuth.middleware.js";
+import attachCurrentUser from "../middleware/attachCurrentUser.middleware.js";
+import UserModel from "../models/user.model.js";
 
 const bookRoutes = new Router();
 
@@ -7,6 +10,17 @@ bookRoutes.delete("/:bookId", async (req, res) => {
     const { bookId } = req.params;
     try {
         const result = await BookModel.findByIdAndDelete( bookId );
+
+        await UserModel.findByIdAndUpdate(
+            result.user,
+            {
+              $pull: {
+                books: bookId,
+              },
+            },
+            { new: true, runValidators: true }
+        );
+
         return res.status(200).json( result );
     } catch (e) {
         console.log(e);
@@ -14,13 +28,25 @@ bookRoutes.delete("/:bookId", async (req, res) => {
     }
 });
 
-bookRoutes.post("/", async (req, res) => {
+bookRoutes.post("/", isAuth, attachCurrentUser, async (req, res) => {
     try {
         const newBook = await BookModel.create({
             ...req.body,
             dataInicio: req.body.dataInicio ? new Date(req.body.dataInicio) : null,
-            dataConclusao: req.body.dataConclusao? new Date(req.body.dataConclusao) : null
+            dataConclusao: req.body.dataConclusao? new Date(req.body.dataConclusao) : null,
+            user: req.currentUser._id
         });
+
+        const userUpdated = await UserModel.findByIdAndUpdate(
+            req.currentUser._id,
+            {
+                $push: {
+                    books: newBook._id,
+                },
+            },
+            { new: true, runValidators: true }
+         );
+        
         return res.status(200).json( newBook );
     } catch (e) {
         console.log(e);
@@ -28,9 +54,9 @@ bookRoutes.post("/", async (req, res) => {
     }
 });
 
-bookRoutes.get("/:bookId", async (req, res) => {
+bookRoutes.get("/:bookId", isAuth, attachCurrentUser, async (req, res) => {
+    const { bookId } = req.params;
     try {
-        const { bookId } = req.params;
         const book = await BookModel.findById( bookId );
         return res.status(200).json( book );
     } catch (e) {
@@ -39,10 +65,13 @@ bookRoutes.get("/:bookId", async (req, res) => {
     }
 });
 
-bookRoutes.get("/:key/:value", async (req, res) => {
+bookRoutes.get("/:key/:value", isAuth, attachCurrentUser, async (req, res) => {
     const { key, value } = req.params;
     const query = {};
     query[key] = value;
+    if ( req.currentUser.role != "ADMIN") {
+        query["user"] = req.currentUser._id;
+    }
     try {
         const books = await BookModel.find(query);
         return res.status(200).json(books);
@@ -52,11 +81,16 @@ bookRoutes.get("/:key/:value", async (req, res) => {
     }
 });
 
-bookRoutes.put("/:bookId", async (req, res) => {
+bookRoutes.put("/:bookId", isAuth, attachCurrentUser, async (req, res) => {
+    const { bookId } = req.params;
+    const query = {};
+    query["_id"] = bookId;
+    if ( req.currentUser.role != "ADMIN") {
+        query["user"] = req.currentUser._id;
+    }
     try {
-        const { bookId } = req.params;
-        const updBook = await BookModel.findByIdAndUpdate(
-            bookId,
+        const updBook = await BookModel.findOneAndUpdate(
+            query,
             {
                 ...req.body,
                 dataInicio: req.body.dataInicio ? new Date(req.body.dataInicio) : null,

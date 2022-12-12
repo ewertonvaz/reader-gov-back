@@ -182,18 +182,12 @@ Retorna Status 200 e caso o usuário exista, um objeto com os dados do usuário 
 # Estrutura (Schema) do Document User
 
 ```
-{
     name: {
       type: String,
       required: true,
       trim: true,
       minLength: 2,
       maxLength: 20
-    },
-    age: {
-      type: Number,
-      min: 18,
-      max: 100,
     },
     email: {
       type: String,
@@ -213,12 +207,9 @@ Retorna Status 200 e caso o usuário exista, um objeto com os dados do usuário 
     },
     tasks: [{ type: String }],
     passwordHash: { type: String, required: true },
-    birth: { type: Date },
-    address: {
-      city: { type: String },
-      state: { type: String },
-    },
-    profilePic: { type: String }
+    profilePic: { type: String },
+    emailConfirm: { type: Boolean, default: false },
+    books: [{ type: Schema.Types.ObjectId, ref: "Book" }]
   },
   {
     timestamps: true,
@@ -283,7 +274,9 @@ Retorna Status 200 e caso o documento exista, um objeto com os dados do document
     imagem : {type: String},
     texto: {type: String},
     pdf : {type: String},
-    dataPublicacao : { type: Date }
+    dataPublicacao : { type: Date },
+    tipo: { type: String, enum: ["dou", "sei"], default: "dou" },
+    document_id: {type: String}
 }
 ```
 
@@ -355,6 +348,7 @@ dataInicio: { type: Date },
 dataConclusao: { type: Date },
 tipo: { type: String },
 caminho: { type: String },
-status: { type: String, enum: ["Ler", "Lendo", "Lido"], default: "Ler" }
+status: { type: String, enum: ["Ler", "Lendo", "Lido"], default: "Ler" },
+user: { type: Schema.Types.ObjectId, ref: "User" }
 }
 ```

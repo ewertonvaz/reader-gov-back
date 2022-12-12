@@ -16,7 +16,8 @@ const BookSchema = new Schema( {
     dataConclusao:  { type: Date },
     tipo: { type: String },
     caminho: { type: String },
-    status: { type: String, enum: ["Ler", "Lendo", "Lido"], default: "Ler" }
+    status: { type: String, enum: ["Ler", "Lendo", "Lido"], default: "Ler" },
+    user: { type: Schema.Types.ObjectId, ref: "User" }
 });
 
 const BookModel = model("Book", BookSchema);
