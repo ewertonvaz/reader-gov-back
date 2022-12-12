@@ -27,11 +27,6 @@ const userSchema = new Schema(
     },
     tasks: [{ type: String }],
     passwordHash: { type: String, required: true },
-    birth: { type: Date },
-    address: {
-      city: { type: String },
-      state: { type: String },
-    },
     profilePic: { type: String },
     emailConfirm: { type: Boolean, default: false },
   },

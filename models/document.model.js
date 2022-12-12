@@ -6,7 +6,8 @@ const documentSchema = new Schema({
     imagem : {type: String},
     texto: {type: String},
     pdf : {type: String},
-    dataPublicacao : { type: Date }
+    dataPublicacao : { type: Date },
+    tipo: { type: String, enum: ["dou", "sei"], default: "dou" }
 });
 
 const DocumentModel = model("Document", documentSchema);
