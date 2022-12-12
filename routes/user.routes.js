@@ -65,6 +65,10 @@ userRoute.post("/login", async (req, res) => {
       }
   
       if (await bcrypt.compare(password, user.passwordHash)) {
+        if (!user.emailConfirm) {
+          return res.status(401).json({ message: "Usuário não ativado" });
+        }
+        
         delete user._doc.passwordHash;
         const token = generateToken(user);
   
