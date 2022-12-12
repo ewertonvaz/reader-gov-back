@@ -7,6 +7,7 @@ import isAuth from "../middleware/isAuth.middleware.js";
 import attachCurrentUser from "../middleware/attachCurrentUser.middleware.js";
 import isAdmin from "../middleware/isAdmin.middleware.js";
 import SendMail from "../services/send-mail.service.js";
+import BookModel from "../models/books.model.js";
 
 const userRoute = express.Router();
 const serverAddr = {
@@ -163,8 +164,8 @@ userRoute.delete("/delete", isAuth, attachCurrentUser, async (req, res) => {
 
     const users = await UserModel.find();
 
-    //deletar TODAS as tarefas que o usuário é dono
-    // await TaskModel.deleteMany({ user: _id });
+    //deletar TODOS os livros de que o usuário é dono
+    await BookModel.deleteMany({ user: _id });
 
     return res.status(200).json(users);
   } catch (error) {
