@@ -30,13 +30,13 @@ GET /documents/get-all
 
 Retorna Status 200 e um array contendo os dados de todos os documento da collection.
 
-Aceita os seguint parâmetros de query:
+Aceita os seguintes parâmetros de query:
 
 - **dt**: tipos do documento, ex.: dt=sei
 - **s**: start index, o índice do primeiro documento a ser recuperado;
 - **ps**: page size, a qauntidade de elementos por página.
 
-Utilizando este parÂmetro é possível filtrar os tipos de documentos e implementar paginação.
+Utilizando este parâmetro é possível filtrar os tipos de documentos e implementar paginação.
 Por exemplo: `/documents/get-all?dt=dou&s=0&ps=15` recuperar a primeira página com **15** documentos de documentos do tipo **dou**; para obter a segunda página seria: `/documents/get-all?dt=dou&s=15&ps=15`; a terceira: `/documents/get-all?dt=dou&s=30&ps=15` e assim por diante.
 
 ### Atualizar um documento pelo ID

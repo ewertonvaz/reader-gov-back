@@ -83,7 +83,6 @@ bookRoutes.get("/:key/:value", isAuth, attachCurrentUser, async (req, res) => {
 
 bookRoutes.get("/get-all", isAuth, attachCurrentUser, async (req, res) => {
     const { dt, s, ps, q } = req.query;
-    console.log(dt, s, ps, q);
     const query = {};
     const startindex = s ? s : 0;
     const pagesize = ps ? ps : 0;
