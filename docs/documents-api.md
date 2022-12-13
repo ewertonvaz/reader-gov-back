@@ -67,6 +67,7 @@ Retorna Status 200 e caso o documento exista, um objeto com os dados do document
     pdf : {type: String},
     dataPublicacao : { type: Date },
     tipo: { type: String, enum: ["dou", "sei"], default: "dou" },
-    document_id: {type: String}
+    document_id: {type: String},
+    notes: [{ type: Schema.Types.ObjectId, ref: "Note" }]
 }
 ```
