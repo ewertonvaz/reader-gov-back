@@ -57,7 +57,7 @@ bookRoutes.post("/", isAuth, attachCurrentUser, async (req, res) => {
 bookRoutes.get("/:bookId", isAuth, attachCurrentUser, async (req, res) => {
     const { bookId } = req.params;
     try {
-        const book = await BookModel.findById( bookId );
+        const book = await BookModel.findById( bookId ).populate("notes");
         return res.status(200).json( book );
     } catch (e) {
         console.log(e);

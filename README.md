@@ -15,6 +15,7 @@ npm start
 
 # Documentação
 
-- [api DOCUMENTS](./docs/documents-api.md)
 - [api BOOKS](./docs/books-api.md)
+- [api DOCUMENTS](./docs/documents-api.md)
+- [api NOTES](./docs/notes-api.md)
 - [api USER](./docs/user-api.md)

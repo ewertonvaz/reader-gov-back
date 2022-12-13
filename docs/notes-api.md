@@ -1,9 +1,9 @@
 # Documentação API notes
 
-### Incluir um documento
+### Incluir uma anotação
 
 ```
-POST /notes
+POST /notes/:docId
 
 ```
 
@@ -17,7 +17,8 @@ Retorna Status 200 e um objeto com os dados do documento criado.
     titulo : {type: String},
     texto: {type: String, required: true},
     page: { type: Number, min:1},
-    book: { type: Schema.Types.ObjectId, ref: "Book" }
+    book: { type: Schema.Types.ObjectId, ref: "Book" },
+    document: { type: Schema.Types.ObjectId, ref: "Document" }
 },
 {
     timestamps: true,
