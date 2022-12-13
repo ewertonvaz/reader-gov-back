@@ -45,7 +45,7 @@ Aceita os seguintes parâmetros de query:
 - **s**: start index, o índice do primeiro documento a ser recuperado;
 - **ps**: page size, a qauntidade de elementos por página.
 
-Utilizando este parâmetro é possível filtrar os tipos de documentos e implementar paginação.
+Utilizando estes parâmetro é possível filtrar os tipos de documentos e implementar paginação.
 Por exemplo: `/books/get-all?dt=dou&s=0&ps=15` recuperar a primeira página com **15** documentos de documentos do tipo **dou**; para obter a segunda página seria: `/books/get-all?dt=dou&s=15&ps=15`; a terceira: `/books/get-all?dt=dou&s=30&ps=15` e assim por diante.
 
 ### Atualizar um livro pelo ID
@@ -85,6 +85,7 @@ dataConclusao: { type: Date },
 tipo: { type: String },
 caminho: { type: String },
 status: { type: String, enum: ["Ler", "Lendo", "Lido"], default: "Ler" },
-user: { type: Schema.Types.ObjectId, ref: "User" }
+user: { type: Schema.Types.ObjectId, ref: "User" },
+notes: [{ type: Schema.Types.ObjectId, ref: "Note" }]
 }
 ```

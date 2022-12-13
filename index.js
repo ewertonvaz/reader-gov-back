@@ -9,6 +9,7 @@ import DocumentRoutes from "./routes/document.routes.js";
 import S3Routes from "./routes/s3.routes.js";
 import CloudnaryRoutes from "./routes/cloudnary.routes.js";
 import ServerRoutes from "./routes/server.routes.js";
+import noteRoute from "./routes/note.route.js";
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use("/cn", CloudnaryRoutes)
 app.use("/documents", DocumentRoutes);
 app.use("/file", fileRoutes);
 app.use("", ServerRoutes);
+app.use("/notes", noteRoute);
 app.use("/s3", S3Routes);
 app.use("/user", userRoutes);
 
