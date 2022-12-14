@@ -68,6 +68,8 @@ Retorna Status 200 e caso o documento exista, um objeto com os dados do document
     dataPublicacao : { type: Date },
     tipo: { type: String, enum: ["dou", "sei"], default: "dou" },
     document_id: {type: String},
-    notes: [{ type: Schema.Types.ObjectId, ref: "Note" }]
+    anotacoes:  { type: String },
+    notes: [{ type: Schema.Types.ObjectId, ref: "Note" }],
+    user: { type: Schema.Types.ObjectId, ref: "User" }
 }
 ```

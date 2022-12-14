@@ -9,9 +9,11 @@ const documentSchema = new Schema({
     dataPublicacao : { type: Date },
     tipo: { type: String, enum: ["dou", "sei"], default: "dou" },
     document_id: {type: String},
-    notes: [{ type: Schema.Types.ObjectId, ref: "Note" }]
+    anotacoes:  { type: String },
+    notes: [{ type: Schema.Types.ObjectId, ref: "Note" }],
+    user: { type: Schema.Types.ObjectId, ref: "User" }
 });
-
+documentSchema.index({texto: 'text', titulo: 'text', anotacoes: 'text'});
 const DocumentModel = model("Document", documentSchema);
 
 export default DocumentModel;
