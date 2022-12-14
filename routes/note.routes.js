@@ -55,15 +55,55 @@ noteRoute.post("/:docId", isAuth, attachCurrentUser, async (req, res) => {
     }
 });
 
+noteRoute.put("/:noteId", isAuth, attachCurrentUser, async (req, res) => {
+    const { noteId } = req.params;
+    try {
+        const data = req.body;
+        delete data.__v0;
+        delete data._id;
+        const updatedNote = await NoteModel.findByIdAndUpdate(
+            noteId,
+            data,
+            { new: true, runValidators: true }
+        );
+        return res.status(200).json(updatedNote);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error.errors);
+    }
+});
+
+
 noteRoute.get("/book/:docId", isAuth, attachCurrentUser, async (req, res) => {
     const { docId } = req.params;
     try {
-        const result = await NoteModel.find( { book : docId} );
+        const result = await NoteModel.find( { book : docId} ).sort( {page: 1});
         return res.status(200).json(result);
     } catch(e){
         console.log(e);
         return res.status(500).json({msg: "Não foi possível recuperar as anotações!"});
     }
 });
+
+noteRoute.delete("/book/:noteId", isAuth, attachCurrentUser, async (req, res) => {
+    const { noteId } = req.params;
+    try {
+        const deletedNote = await NoteModel.findByIdAndDelete(noteId);
+        await BookModel.findByIdAndUpdate(
+        deletedNote.book,
+        {
+            $pull: {
+            notes: noteId,
+            }
+        },
+        { new: true, runValidators: true }
+        );
+        return res.status(200).json(deletedNote);
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json(error.errors);
+    }
+});
+
 
 export default noteRoute;
