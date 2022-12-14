@@ -20,6 +20,6 @@ const BookSchema = new Schema( {
     user: { type: Schema.Types.ObjectId, ref: "User" },
     notes: [{ type: Schema.Types.ObjectId, ref: "Note" }]
 });
-
+BookSchema.index({subtitulo: 'text', titulo: 'text', anotacoes: 'text'});
 const BookModel = model("Book", BookSchema);
 export default BookModel;

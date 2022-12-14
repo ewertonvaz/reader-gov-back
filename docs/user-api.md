@@ -194,7 +194,8 @@ Retorna Status 200 e caso o usuário exista, um objeto com os dados do usuário 
     passwordHash: { type: String, required: true },
     profilePic: { type: String },
     emailConfirm: { type: Boolean, default: false },
-    books: [{ type: Schema.Types.ObjectId, ref: "Book" }]
+    books: [{ type: Schema.Types.ObjectId, ref: "Book" }],
+    documents: [{ type: Schema.Types.ObjectId, ref: "Document" }]
   },
   {
     timestamps: true,
