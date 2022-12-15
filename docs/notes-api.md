@@ -27,7 +27,16 @@ DELETE /notes/book/:noteId
 
 ```
 
-Recebe como parâmetro o **noteId** o identificador da anotação que se desja excluir necessariamente de um LIVRO. Retorna Status 200 e os dados da anotações que foi deletada.
+Recebe como parâmetro o **noteId** o identificador da anotação que se deseja excluir necessariamente de um LIVRO. Retorna Status 200 e os dados da anotação que foi deletada.
+
+### Deleta uma anotação de um Document
+
+```
+DELETE /notes/document/:noteId
+
+```
+
+Recebe como parâmetro o **noteId** o identificador da anotação que se deseja excluir necessariamente de um DOCUMENTO. Retorna Status 200 e os dados da anotação que foi deletada.
 
 # Estrutura (Schema) do document Notes
 

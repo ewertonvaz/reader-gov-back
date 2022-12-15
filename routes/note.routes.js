@@ -105,5 +105,25 @@ noteRoute.delete("/book/:noteId", isAuth, attachCurrentUser, async (req, res) =>
     }
 });
 
+noteRoute.delete("/document/:noteId", isAuth, attachCurrentUser, async (req, res) => {
+    const { noteId } = req.params;
+    try {
+        const deletedNote = await NoteModel.findByIdAndDelete(noteId);
+        await DocumentModel.findByIdAndUpdate(
+        deletedNote.document,
+        {
+            $pull: {
+            notes: noteId,
+            }
+        },
+        { new: true, runValidators: true }
+        );
+        return res.status(200).json(deletedNote);
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json(error.errors);
+    }
+});
+
 
 export default noteRoute;
