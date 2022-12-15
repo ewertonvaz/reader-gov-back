@@ -85,6 +85,17 @@ noteRoute.get("/book/:docId", isAuth, attachCurrentUser, async (req, res) => {
     }
 });
 
+noteRoute.get("/document/:docId", isAuth, attachCurrentUser, async (req, res) => {
+    const { docId } = req.params;
+    try {
+        const result = await NoteModel.find( { document : docId} ).sort( {page: 1});
+        return res.status(200).json(result);
+    } catch(e){
+        console.log(e);
+        return res.status(500).json({msg: "Não foi possível recuperar as anotações!"});
+    }
+});
+
 noteRoute.delete("/book/:noteId", isAuth, attachCurrentUser, async (req, res) => {
     const { noteId } = req.params;
     try {
