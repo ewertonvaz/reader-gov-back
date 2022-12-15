@@ -129,6 +129,17 @@ DocumentRoutes.get("/get-all", isAuth, attachCurrentUser, async (req, res) => {
     }
 });
 
+DocumentRoutes.get("/get-all/dou", async (req, res) => {
+    try {
+        const documents = await DocumentModel.find();
+            //.sort( {user: -1});      
+        return res.status(200).json(documents);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json("Não foi possível obter a lista de documentos!");
+    }
+});
+
 // DocumentRoutes.get("/change-all", async (req, res) =>{
 //     const documents = await DocumentModel.updateMany(
 //         { tipo: {$exists: false}},
