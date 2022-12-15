@@ -6,7 +6,7 @@ import attachCurrentUser from "../middleware/attachCurrentUser.middleware.js";
 
 const DocumentRoutes = new Router();
 
-DocumentRoutes.get("/get-one/:docId", async (req, res) => {
+DocumentRoutes.get("/get-one/:docId", isAuth, attachCurrentUser, async (req, res) => {
     const { docId } = req.params;
 
     try {

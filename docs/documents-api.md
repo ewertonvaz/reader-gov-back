@@ -1,13 +1,26 @@
 # Documentação API documents
 
-### Incluir um documento
+### Incluir um documento (protegida)
 
 ```
 POST /documents
 
 ```
 
-O body da requisição deverá conter um objeto com os dados do documento que será incluído. Vide a estrutura (schema) do documento **Document** abaixo:
+O body da requisição deverá conter um objeto com os dados do documento que será incluído. Vide a estrutura (schema) do documento **Document** abaixo.
+Retorna Status 200 e um objeto com os dados do documento criado.
+**Obs:** Ao enviar pelo fron-end é recomendado usar o _encodeURI()_ para normalizar o conteúdo do campo **texto**.
+
+### Incluir um documento DOU (desprotgida)
+
+Esta rota não necessita de autenticação pois é usada somente pelo scrapping para incluirdocumentos proveniente da raspagem do Diário Oficial da União.
+
+```
+POST /documents/dou
+
+```
+
+O body da requisição deverá conter um objeto com os dados do documento que será incluído. Vide a estrutura (schema) do documento **Document** abaixo.
 Retorna Status 200 e um objeto com os dados do documento criado.
 **Obs:** Ao enviar pelo fron-end é recomendado usar o _encodeURI()_ para normalizar o conteúdo do campo **texto**.
 
