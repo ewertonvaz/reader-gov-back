@@ -23,6 +23,7 @@ DocumentRoutes.post("/", isAuth, attachCurrentUser, async (req, res) => {
     try {
         const newDocument = await DocumentModel.create({
             ...req.body,
+            dataPublicacao: req.body.dataPublicacao ? new Date(req.body.dataPublicacao) : null,
             user: req.currentUser._id
         });
         // encodeURI()
@@ -45,7 +46,8 @@ DocumentRoutes.post("/", isAuth, attachCurrentUser, async (req, res) => {
 DocumentRoutes.post("/dou",  async (req, res) => {
     try {
         const newDocument = await DocumentModel.create({
-            ...req.body
+            ...req.body,
+            dataPublicacao: req.body.dataPublicacao ? new Date(req.body.dataPublicacao) : null
         });
         // encodeURI()
         return res.status(200).json(newDocument);
