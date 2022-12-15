@@ -8,6 +8,7 @@ const documentSchema = new Schema({
     pdf : {type: String},
     dataPublicacao : { type: Date },
     tipo: { type: String, enum: ["dou", "sei"], default: "dou" },
+    formato: { type: String, enum: ["pdf", "epub"], default: "pdf" },
     document_id: {type: String},
     anotacoes:  { type: String },
     notes: [{ type: Schema.Types.ObjectId, ref: "Note" }],
