@@ -26,6 +26,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use(express.json());
+
+// Ativa template engine
+app.set('views', './views');
+app.set('view engine', 'pug');
+//
+
 app.use("/books", bookRoutes);
 app.use("/cn", CloudnaryRoutes)
 app.use("/documents", DocumentRoutes);

@@ -128,7 +128,8 @@ userRoute.post("/login", async (req, res) => {
         emailConfirm: true,
       });
 
-      res.send("Usuário ativado!");
+      //res.send("Usuário ativado!");
+      res.render('validated', { title: 'Cadastro validado', name: user.name, email: user.email })
   } catch (error) {
     console.log(error);
     return res.status(400).json(error);
