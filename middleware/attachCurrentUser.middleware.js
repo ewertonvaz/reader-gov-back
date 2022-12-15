@@ -2,8 +2,8 @@ import UserModel from "../models/user.model.js";
 
 async function attachCurrentUser(req, res, next) {
     try {
-        const { _id} = req.auth;
-        const user = await UserModel.findOne({_id}, { passwordHash: 0 });
+        const userData = req.auth;
+        const user = await UserModel.findById(userData._id, { passwordHash: 0 });
         if (!user) {
             return res.status(400).json({ message: "Este usuário não existe !" });
         }
