@@ -10,7 +10,7 @@ DocumentRoutes.get("/get-one/:docId", isAuth, attachCurrentUser, async (req, res
     const { docId } = req.params;
 
     try {
-        const document = await DocumentModel.findById( docId );
+        const document = await DocumentModel.findById( docId ).populate("notes");
         //decodeURI()
         return res.status(200).json(document);
     } catch (e) {
