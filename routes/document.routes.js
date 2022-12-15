@@ -42,6 +42,19 @@ DocumentRoutes.post("/", isAuth, attachCurrentUser, async (req, res) => {
     }
 });
 
+DocumentRoutes.post("/dou",  async (req, res) => {
+    try {
+        const newDocument = await DocumentModel.create({
+            ...req.body
+        });
+        // encodeURI()
+        return res.status(200).json(newDocument);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json("Erro ao criar o documento!");
+    }
+});
+
 DocumentRoutes.put("/:docId", isAuth, attachCurrentUser, async (req, res) => {
     const { docId } = req.params;
 
