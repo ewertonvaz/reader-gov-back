@@ -135,6 +135,14 @@ POST /user
 O body da requisição deverá conter um objeto com os dados do usuário que será incluído. Vide a estrutura (schema) do documento **User** abaixo:
 Retorna Status 200 e um objeto com os dados do usuário criado.
 
+### Obter um usuário pelo id
+
+```
+GET /user/oneUser/:id
+```
+
+Retorna Status 200 e um objeto com os dados do usuário cujo ID foi passado como parâmetro.
+
 ### Obter um usuário pelo parâmetro key/value
 
 ```
