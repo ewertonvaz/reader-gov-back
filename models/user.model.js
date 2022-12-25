@@ -7,6 +7,13 @@ const userSchema = new Schema(
       required: true,
       trim: true,
       minLength: 2,
+      maxLength: 60
+    },
+    username: {
+      type: String,
+      unique: true,
+      trim: true,
+      minLength: 2,
       maxLength: 20
     },
     email: {
@@ -30,7 +37,8 @@ const userSchema = new Schema(
     profilePic: { type: String },
     emailConfirm: { type: Boolean, default: false },
     books: [{ type: Schema.Types.ObjectId, ref: "Book" }],
-    documents: [{ type: Schema.Types.ObjectId, ref: "Document" }]
+    documents: [{ type: Schema.Types.ObjectId, ref: "Document" }],
+    tweets: [{ type: Schema.Types.ObjectId, ref: "Tweet" }]
   },
   {
     timestamps: true,
