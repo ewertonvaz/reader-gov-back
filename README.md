@@ -52,6 +52,9 @@ npm start
 
 ```
 
+# Fluxo de Dados
+![fluxo de dados](./docs/Infra_Reader_GOV.png "Fluxo de dados nos servidores")
+
 # Documentação
 
 - [api BOOKS](./docs/books-api.md)
