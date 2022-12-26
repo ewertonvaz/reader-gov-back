@@ -9,8 +9,15 @@ const serverAddr = {
 };
 
 tweetRoutes.get("/", async (req, res) => {
+    const { page, perpage} = req.query;
+    const pageNum = page ? page : 1;
+    const pageLimit = perpage ? perpage : 10;
     try {
-      const tweets = await TweetModel.find({}).populate("user", ["name", "email", "username", "profilePic"]);
+      const tweets = await TweetModel
+        .find({})
+        .skip( (pageNum - 1) * pageLimit)
+        .limit(pageLimit)
+        .populate("user", ["name", "email", "username", "profilePic"]);
   
       return res.status(200).json(tweets);
     } catch (error) {
