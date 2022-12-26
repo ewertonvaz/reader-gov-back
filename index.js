@@ -10,6 +10,7 @@ import S3Routes from "./routes/s3.routes.js";
 import CloudnaryRoutes from "./routes/cloudnary.routes.js";
 import ServerRoutes from "./routes/server.routes.js";
 import noteRoute from "./routes/note.routes.js";
+import tweetRoutes from "./routes/tweet.routes.js";
 
 dotenv.config();
 
@@ -46,6 +47,7 @@ app.use("", ServerRoutes);
 app.use("/notes", noteRoute);
 app.use("/s3", S3Routes);
 app.use("/user", userRoutes);
+app.use("/tweets", tweetRoutes);
 
 connect(dbName);
 
