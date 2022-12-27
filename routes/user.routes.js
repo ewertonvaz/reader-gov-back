@@ -9,7 +9,6 @@ import isAdmin from "../middleware/isAdmin.middleware.js";
 import SendMail from "../services/send-mail.service.js";
 import BookModel from "../models/books.model.js";
 import DocumentModel from "../models/document.model.js";
-import TweetModel from "../models/tweet.model.js";
 
 const userRoute = express.Router();
 const serverAddr = {
@@ -172,9 +171,6 @@ userRoute.delete("/delete", isAuth, attachCurrentUser, async (req, res) => {
 
     //deletar TODOS os documentos de que o usuário é dono
     await DocumentModel.deleteMany({ user: _id });
-
-    //deletar TODOS os tweets de que o usuário é dono
-    await TweetModel.deleteMany({ user: _id });
 
     return res.status(200).json(users);
   } catch (error) {
